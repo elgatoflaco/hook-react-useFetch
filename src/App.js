@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import useFetch from "./hooks/useFetch";
 
 function App() {
+  const characters = useFetch("https://rickandmortyapi.com/api/character/", []);
+  const results = characters.data.results;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Personajes</h2>
+
+      <ul>
+        {results &&
+          results.map(character => (
+            <div className="card" key={character.id}>
+              <div className="content">
+                <img src={character.image} alt={character.name} />
+                <h1>{character.name}</h1>
+                <p>{character.status}</p>
+              </div>
+            </div>
+          ))}
+      </ul>
     </div>
   );
 }
